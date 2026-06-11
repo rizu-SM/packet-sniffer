@@ -1,0 +1,89 @@
+# Default Configuration for Packet Sniffer
+
+# Capture settings
+capture:
+  # Interface to sniff on (empty = auto-select)
+  interface: ""
+  
+  # Packet buffer size (number of packets)
+  buffer_size: 10000
+  
+  # Timeout for live capture (seconds, 0 = no timeout)
+  timeout: 0
+  
+  # Snapshot length (bytes to capture per packet, 0 = unlimited)
+  snaplen: 65535
+
+# Filter settings (leave empty to capture all traffic)
+filters:
+  # Protocol filters: tcp, udp, dns, http, https, icmp, arp
+  protocols: []
+  
+  # Source IP filter (CIDR notation or specific IP)
+  src_ip: ""
+  
+  # Destination IP filter
+  dst_ip: ""
+  
+  # Port range (e.g., "80,443,8080-8090")
+  ports: ""
+
+# Storage settings
+storage:
+  # Database path
+  db_path: "./data/packets.db"
+  
+  # Cache size (number of flows to keep in memory)
+  cache_size: 1000
+  
+  # Flow timeout (seconds, close flow if no activity)
+  flow_timeout: 300
+
+# Analysis settings
+analysis:
+  # Enable real-time statistics computation
+  real_time_stats: true
+  
+  # Statistics update interval (seconds)
+  stats_interval: 5
+
+# Anomaly detection settings (Phase 2)
+anomaly:
+  # Enable anomaly detection
+  enabled: true
+  
+  # Baseline learning period (seconds)
+  baseline_period: 3600
+  
+  # Detection thresholds
+  thresholds:
+    # Z-score threshold for volumetric anomalies
+    volumetric_zscore: 3.0
+    
+    # Port scan detection: connections to unique ports in time window
+    port_scan_threshold: 50
+    
+    # Unusual protocol usage threshold (percentage deviation)
+    protocol_deviation: 50
+  
+  # Alert settings
+  alerts:
+    # Minimum severity to trigger alert (low, medium, high, critical)
+    min_severity: "medium"
+    
+    # Alert log file path
+    log_path: "./data/alerts.log"
+
+# Logging
+logging:
+  level: INFO
+  format: "%(asctime)s [%(levelname)s] %(name)s - %(message)s"
+  file: "./logs/packet_sniffer.log"
+  
+# Export settings
+export:
+  # Default export format (csv, json, html)
+  format: "csv"
+  
+  # Export directory
+  output_dir: "./exports"
